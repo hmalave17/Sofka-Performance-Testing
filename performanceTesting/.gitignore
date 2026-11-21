@@ -1,0 +1,37 @@
+# Operating system
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+
+# Java / Gradle
+*.class
+.gradle/
+build/
+target/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.old
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# JMeter temporary files
+jmeter.log
+
+# Exclude intermediate and diagnostic test plans
+/test-plans/*
+!/test-plans/FakeStoreLogin_Performance_Calibrated_21TPS.jmx
+
+# Exclude intermediate and diagnostic execution results
+/results/*
+!/results/FakeStoreLogin_Calibration_21TPS.jtl

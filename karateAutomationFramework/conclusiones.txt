@@ -1,0 +1,148 @@
+TECHNICAL CHALLENGE – API TEST AUTOMATION
+SOFKA TECHNOLOGIES
+
+==================================================
+1. EXECUTION SUMMARY
+==================================================
+
+The API automation solution covers four test scenarios focused on the user authentication and registration functionalities of the DemoBlaze API.
+
+Automated scenarios:
+
+1. Successful user registration.
+2. Attempt to register an existing user.
+3. Successful login with valid credentials.
+4. Login attempt with invalid credentials.
+
+Execution summary:
+
+- Total scenarios: 4
+- Passed: 4
+- Failed: 0
+- Skipped: 0
+- Overall result: [PASSED]
+
+Execution date: [19-11-2026]
+
+==================================================
+2. TEST FINDINGS
+==================================================
+
+2.1 User Registration
+Result: PASS
+
+Finding:
+-The service returns HTTP 200 (OK) when a new user is registered. However, the response body does not provide a clear confirmation message indicating that the user was successfully created.
+
+Recommendation:
+- Consider returning HTTP 201 (Created), since a new user resource is being created.
+- Include a clear response message confirming successful user registration.
+- Perform an additional database validation to verify that the user was successfully persisted.
+
+Conclusion:
+The HTTP 200 response alone is insufficient to confirm that the registration operation was completed successfully. Database verification is recommended to ensure that the user was actually created.
+--------------------------------------------------
+
+2.2 Existing User Registration
+Result: PASS
+
+Findings:
+
+-The service returns HTTP 200 (OK) when attempting to register an existing user. The actual business result must therefore be determined by validating the response body and its error message.
+-User registration relies on a username rather than a unique identifier such as an email address, which could provide an additional way to identify users.
+-The current test approach uses predefined user data, which introduces dependency on hardcoded test data.
+
+Recommendations:
+
+-Consider returning an appropriate HTTP status code, such as 409 (Conflict), when attempting to register an existing user.
+-Implement a dynamic test data strategy by querying the database to retrieve an existing active user.
+-Use the retrieved username to perform the registration attempt and verify that the API correctly rejects the duplicate registration.
+-Avoid hardcoded user credentials to make the test more reliable, reusable, and independent of predefined data.
+
+Conclusion:
+-A more reliable validation would consist of retrieving an existing active user directly from the database and using that information to attempt a new registration. This approach would ensure that the test is based on actual system data, eliminate hardcoded test data dependencies, and provide stronger evidence that duplicate user registration is properly handled.
+
+--------------------------------------------------
+
+2.3 Successful Login
+
+Result: PASS
+
+Findings:
+
+-The service successfully authenticates the user and returns an authentication token.
+-However, the response JSON structure does not provide relevant information about the token lifecycle, such as its creation timestamp, expiration timestamp, or validity duration.
+-Repeated login requests using the same credentials are accepted without any apparent restriction or indication of an existing authenticated session.
+
+Recommendations:
+
+-Improve the authentication response structure by including token metadata, such as:
+    Token creation timestamp (issued_at).
+    Token expiration timestamp (expires_at).
+    Token validity duration (expires_in).
+
+-Define and document the expected behavior for repeated authentication requests using the same credentials.
+-If the authentication mechanism is intended to restrict concurrent sessions, implement the corresponding session management and validation rules.
+-Include additional tests to validate token expiration and authentication behavior across repeated login requests.
+
+Conclusion:
+-Although the authentication process works as expected, the current response does not provide sufficient information to manage or validate the authentication token lifecycle. Additionally, the behavior of repeated login requests should be clearly defined to ensure consistent session management and security policies.
+
+--------------------------------------------------
+
+2.4 Invalid Login
+
+Result: PASS
+
+Findings:
+
+-The service returns HTTP 200 (OK) when attempting to authenticate with an incorrect password.
+-The authentication response should provide a clear error message without exposing sensitive information about the user's credentials or account.
+
+Recommendations:
+
+-Return HTTP 401 (Unauthorized) when the supplied credentials are invalid.
+-Provide a clear and consistent authentication error message.
+-Ensure that error responses do not expose sensitive information or reveal whether a specific username exists.
+-Include additional negative authentication scenarios, such as empty passwords, missing credentials, and invalid usernames.
+
+Conclusion:
+-The API correctly identifies the unsuccessful authentication attempt through its application-level response. However, returning HTTP 200 does not accurately represent the authentication failure at the HTTP protocol level. Using HTTP 401 and maintaining consistent error responses would improve API compliance, clarity, and security.
+
+==================================================
+3. TECHNICAL OBSERVATIONS
+==================================================
+
+The following technical considerations were identified during the implementation:
+
+- The API returns application-level errors using HTTP 200 responses for negative authentication and registration scenarios. Therefore, validating the HTTP status code alone is insufficient to determine whether the operation was successful.
+
+- Dynamic username generation using UUID helps prevent duplicate registration conflicts during repeated test executions.
+
+- External JSON files were used to separate test data and request payloads from the test implementation.
+
+- Reusable response schemas help maintain consistent validation across negative scenarios.
+
+==================================================
+4. LIMITATIONS AND CONSIDERATIONS
+==================================================
+
+- The automation scope is limited to the authentication and registration endpoints defined in the technical assessment.
+
+- The solution validates the API behavior according to the responses and contract currently exposed by DemoBlaze.
+
+- No additional performance, security, or load testing was included in the assessment.
+
+- The test execution depends on the availability of the external DemoBlaze API.
+
+==================================================
+5. CONCLUSIONS
+==================================================
+
+The technical assessment demonstrates the implementation of a modular API automation solution using Java, Karate Framework, Maven, and JUnit 5.
+
+The framework covers positive and negative scenarios for user authentication and registration, incorporating reusable configurations, external test data, dynamic data generation, and response validation.
+
+The implementation prioritizes maintainability, readability, and separation of responsibilities, allowing the test suite to be extended with additional scenarios and API functionalities.
+
+The execution results documented in this file provide evidence of the behavior observed during the assessment.

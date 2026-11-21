@@ -1,0 +1,30 @@
+﻿# Operating system
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+
+# Java / Maven
+target/
+*.class
+
+# Gradle
+.gradle/
+build/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# JMeter temporary files
+jmeter.log

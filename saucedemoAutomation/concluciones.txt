@@ -1,0 +1,55 @@
+TECHNICAL CHALLENGE – QA AUTOMATION | SOFKA TECHNOLOGIES
+TEST EXECUTION FINDINGS AND CONCLUSIONS
+
+1. TEST EXECUTION SUMMARY
+
+The automated solution was developed to validate the main purchase
+workflow of the SauceDemo web application.
+
+The test coverage includes the following stages:
+
+- User authentication.
+- Product selection.
+- Shopping cart validation.
+- Checkout process.
+- Customer information submission.
+- Order overview validation.
+- Purchase completion.
+
+Execution results:
+
+Total scenarios: 1
+Passed: 1
+Failed: 0
+Skipped: 0
+
+2. TEST SCENARIOS AND RESULTS
+
+2.1 E2E FLOW PURCHASE
+
+Objective:
+Validate that the purchase process can be completed successfully.
+
+Expected result:
+The application should confirm that the order has been completed.
+
+Actual result:
+The behavior was as expected, nothing new to report.
+
+Status:
+PASS
+
+
+3. CONCLUSIONS
+
+The technical challenge demonstrates the implementation of a
+Java-based E2E automation solution using Serenity BDD, the Screenplay
+Pattern, Selenium WebDriver, and Cucumber.
+
+The framework separates business actions, browser interactions,
+application locators, test data, and validation logic into dedicated
+components.
+
+This structure supports code reusability, maintainability, and
+readability while providing a foundation for extending the automated
+test coverage.

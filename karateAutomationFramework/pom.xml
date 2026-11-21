@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>co.com.sofka</groupId>
+    <artifactId>karate-automation-framework</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <!-- Java -->
+        <maven.compiler.release>11</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Dependencies -->
+        <karate.version>1.3.1</karate.version>
+        <junit.version>5.9.3</junit.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- Karate Framework + JUnit 5 -->
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-junit5</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- Java Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+            </plugin>
+
+            <!-- Test Execution -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Runner.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

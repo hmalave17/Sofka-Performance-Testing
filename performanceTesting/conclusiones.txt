@@ -1,0 +1,206 @@
+TECHNICAL CHALLENGE – PERFORMANCE TESTING
+SOFKA TECHNOLOGIES
+
+==================================================
+1. EXECUTION SUMMARY
+==================================================
+
+The performance testing solution evaluates the FakeStore API authentication endpoint using Apache JMeter 5.6.3.
+
+The test simulates concurrent authentication requests using 20 virtual users and externally parameterized credentials provided through a CSV file.
+
+Test information:
+
+- API: FakeStore API.
+- Endpoint: POST https://fakestoreapi.com/auth/login
+- Performance Testing Tool: Apache JMeter 5.6.3.
+- Java Runtime: Microsoft OpenJDK 11.0.18 (64-bit).
+- Concurrent Virtual Users: 20.
+- Ramp-up Period: 10 seconds.
+- Test Duration: 60 seconds.
+- Target Throughput: 1260 samples per minute (21 TPS).
+
+Execution evidence:
+
+- JTL File: FakeStoreLogin_Calibration_21TPS.jtl
+- Total Samples: 1,220.
+- Successful HTTP Responses: 1,220.
+- Failed Samples: 0.
+- Overall Error Rate: 0.000%.
+
+Execution Date: 20-11-2026
+
+Overall Execution Result: [PASSED]
+
+==================================================
+2. OFFICIAL PERFORMANCE ACCEPTANCE CRITERIA
+==================================================
+
+The assessment defines three mandatory performance acceptance criteria.
+
+2.1 Throughput
+
+Requirement:
+- Minimum throughput of 20 transactions per second (TPS).
+
+Measured Result:
+- 20.300 TPS.
+
+Status: [PASS]
+
+Finding:
+
+The test achieved an effective throughput of approximately 20.300 requests per second, exceeding the minimum required throughput.
+
+The configured Constant Throughput Timer target was 1260 samples per minute, equivalent to 21 TPS.
+
+The final measured throughput demonstrates that the test successfully achieved the required request rate under the configured execution conditions.
+
+--------------------------------------------------
+
+2.2 Maximum Response Time
+
+Requirement:
+- Maximum response time of 1,500 milliseconds.
+
+Measured Result:
+- 1,229 milliseconds.
+
+Status: [PASS]
+
+Finding:
+
+The maximum recorded response time was 1,229 ms, remaining 271 ms below the maximum response time defined in the assessment.
+
+The average response time was 295.69 ms, indicating that the majority of authentication requests were processed considerably faster than the maximum allowed response time.
+
+--------------------------------------------------
+
+2.3 Error Rate
+
+Requirement:
+- Error rate below 3%.
+
+Measured Result:
+- 0.000%.
+
+Status: [PASS]
+
+Finding:
+
+All 1,220 recorded samples completed without errors.
+
+The API returned HTTP 201 for all recorded requests, and the configured response code and JSONPath assertions were successfully satisfied.
+
+The execution therefore achieved an error rate of 0.000%, meeting the official acceptance criterion.
+
+--------------------------------------------------
+
+2.4 Acceptance Criteria Summary
+
+| Criterion | Requirement | Actual Result | Status |
+| Throughput | >= 20 TPS | 20.300 TPS | PASS |
+| Maximum Response Time | <= 1,500 ms | 1,229 ms | PASS |
+| Error Rate | < 3% | 0.000% | PASS |
+
+Overall Acceptance Result: 3/3 PASS.
+
+==================================================
+3. PERFORMANCE RESULTS ANALYSIS
+==================================================
+
+The final calibrated execution produced the following measurements:
+
+- Total Samples: 1,220.
+- Effective Duration: 60.100 seconds.
+- Throughput: 20.300 TPS.
+- Average Response Time: 295.69 ms.
+- Minimum Response Time: 276 ms.
+- Maximum Response Time: 1,229 ms.
+- P90: 302 ms.
+- P95: 312 ms.
+- P99: 444 ms.
+- Error Count: 0.
+- Error Rate: 0.000%.
+
+3.1 Response Time Distribution
+
+The percentile measurements provide additional insight into the response time distribution.
+
+- P90: 90% of the recorded requests completed within approximately 302 ms.
+- P95: 95% of the recorded requests completed within approximately 312 ms.
+- P99: 99% of the recorded requests completed within approximately 444 ms.
+
+These results indicate that most authentication requests completed within a relatively short response time.
+
+The maximum recorded response time was higher than the percentile measurements but remained within the official 1,500 ms threshold.
+
+3.2 Throughput Analysis
+
+The final throughput was approximately 20.300 TPS, exceeding the minimum required rate of 20 TPS.
+
+The initial execution achieved approximately 19.485 TPS and did not meet the throughput criterion.
+
+To address this result, the Constant Throughput Timer target was calibrated from 1200 to 1260 samples per minute.
+
+The final execution achieved the required throughput without changing the configured number of virtual users, ramp-up period, or test duration.
+
+==================================================
+4. TECHNICAL OBSERVATIONS
+==================================================
+
+The following technical observations were identified during the implementation and execution:
+
+- External CSV parameterization separates test credentials from the JMeter test plan.
+
+- Five unique test user records were provided as part of the technical assessment.
+
+- The CSV Data Set Config component distributes the test data across the virtual users using the configured sharing mode.
+
+- HTTP Response Code Assertion and JSONPath Assertion provide functional validation during the performance test.
+
+- The Constant Throughput Timer provides control over the target request rate.
+
+- The final JTL file provides execution-level evidence, including response times, timestamps, HTTP response codes, and sample results.
+
+- The HTML dashboard was generated from the existing JTL evidence without executing the performance test again.
+
+- The dashboard statistics were independently compared against the JTL analysis and showed consistent sample counts, response times, and throughput measurements.
+
+==================================================
+5. LIMITATIONS AND CONSIDERATIONS
+==================================================
+
+The following limitations should be considered when interpreting the results:
+
+- The assessment evaluates only the FakeStore API authentication endpoint.
+
+- Results represent the specific execution environment, network conditions, and API availability at the time of testing.
+
+- The test uses 20 concurrent virtual users and a 60-second scheduled execution. It does not establish the maximum capacity of the API.
+
+- External service availability and network latency may influence performance measurements.
+
+- The JTL evidence does not independently identify which individual CSV username was consumed by each request. Although five unique credentials are configured in the CSV, individual credential consumption cannot be demonstrated from the current JTL evidence.
+
+- The test focuses on the official performance acceptance criteria and does not constitute a comprehensive security, endurance, stress, or scalability assessment.
+
+==================================================
+6. CONCLUSIONS
+==================================================
+
+The performance testing solution successfully evaluated the FakeStore API authentication endpoint using Apache JMeter 5.6.3.
+
+The final calibrated execution achieved a throughput of approximately 20.300 TPS, a maximum response time of 1,229 ms, and an error rate of 0.000%.
+
+All three official performance acceptance criteria were successfully met.
+
+The calibration process demonstrated the importance of analyzing actual execution evidence and adjusting the throughput configuration based on measured results rather than relying exclusively on configured target values.
+
+The implementation also incorporates external CSV test data, concurrent virtual users, response assertions, JTL execution evidence, and an HTML performance dashboard.
+
+The final solution provides a reproducible performance testing scenario and documented evidence of the results obtained under the assessment conditions.
+
+Final Assessment Result: [SUCCESSFULLY COMPLETED]
+
+Execution Date: 20-11-2026
