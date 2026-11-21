@@ -1,4 +1,4 @@
- <h1>Sofka Technologies – Technical Assessment</h1>
+<h1>Sofka Technologies – Technical Assessment</h1>
 
 <h2>1. Repository Overview</h2>
 
@@ -9,7 +9,8 @@
 
 <p>
     The repository consolidates three independent projects covering different areas of Software Quality Assurance,
-    including performance testing, API test automation, and UI test automation.
+    including performance testing, API test automation, and UI test automation. It also includes a separate
+    performance results analysis report corresponding to Exercise 2.
 </p>
 
 <p>
@@ -17,9 +18,9 @@
     clear documentation, and structured test execution.
 </p>
 
-<h2>2. Assessment Projects</h2>
+<h2>2. Assessment Projects and Deliverables</h2>
 
-<h3>2.1 Performance Testing – FakeStore API</h3>
+<h3>2.1 Performance Testing – FakeStore API (Exercise 1)</h3>
 
 <p><strong>Project Directory:</strong> <code>performanceTesting/</code></p>
 
@@ -45,7 +46,7 @@
 
 <ul>
     <li>Apache JMeter 5.6.3</li>
-    <li>Java 11</li>
+    <li>Microsoft OpenJDK 11.0.18 (64-bit)</li>
     <li>Windows PowerShell 5.1</li>
     <li>CSV test data</li>
     <li>HTML Performance Dashboard</li>
@@ -97,7 +98,40 @@
 
 <hr/>
 
-<h3>2.2 API Test Automation – Karate Framework</h3>
+<h3>2.2 Performance Results Analysis (Exercise 2)</h3>
+
+<p><strong>Project Directory:</strong> <code>ejercicio2/</code></p>
+
+<p>
+    Performance results analysis based on the load testing summary and monitoring diagram
+    provided as part of the technical assessment.
+</p>
+
+<p><strong>Analysis Scope:</strong></p>
+
+<ul>
+    <li>Analysis of the provided textSummary.txt performance results.</li>
+    <li>Evaluation of HTTP request throughput and virtual users (VUs).</li>
+    <li>Analysis of response times, including average, median, and percentiles.</li>
+    <li>Identification and interpretation of HTTP 4xx and HTTP 5xx errors.</li>
+    <li>Analysis of the monitoring diagram showing the relationship between VUs and HTTP requests per second.</li>
+    <li>Identification of performance findings and potential areas of degradation.</li>
+    <li>Technical conclusions and recommendations based on the available evidence.</li>
+</ul>
+
+<p><strong>Deliverable:</strong></p>
+
+<ul>
+    <li><code>InformeResultados_Ejercicio2.txt</code> – Performance analysis report containing findings, conclusions, and recommendations.</li>
+</ul>
+
+<p>
+    <a href="./ejercicio2/InformeResultados_Ejercicio2.txt">View Exercise 2 Performance Analysis Report</a>
+</p>
+
+<hr/>
+
+<h3>2.3 API Test Automation – Karate Framework</h3>
 
 <p><strong>Project Directory:</strong> <code>karateAutomationFramework/</code></p>
 
@@ -141,7 +175,7 @@
 
 <hr/>
 
-<h3>2.3 UI Test Automation – SauceDemo</h3>
+<h3>2.4 UI Test Automation – SauceDemo</h3>
 
 <p><strong>Project Directory:</strong> <code>saucedemoAutomation/</code></p>
 
@@ -175,8 +209,9 @@
 <h2>3. Repository Structure</h2>
 
 <p>
-    The repository is organized into three independent project directories.
-    Each directory maintains its own source code, configuration files, execution resources,
+    The repository is organized into three independent automation project directories
+    and a separate directory containing the Exercise 2 performance analysis report.
+    Each project maintains its own source code, configuration files, execution resources,
     and documentation.
 </p>
 
@@ -189,6 +224,9 @@
 │   ├── README.md
 │   ├── readme.txt
 │   └── conclusiones.txt
+│
+├── ejercicio2/
+│   └── InformeResultados_Ejercicio2.txt
 │
 ├── karateAutomationFramework/
 │   ├── src/
@@ -213,6 +251,11 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td>Microsoft OpenJDK 11.0.18</td>
+            <td>Performance Testing</td>
+            <td>Java runtime environment</td>
+        </tr>
         <tr>
             <td>Java 11</td>
             <td>Karate / SauceDemo</td>
@@ -254,6 +297,11 @@
             <td>External test data management</td>
         </tr>
         <tr>
+            <td>HTML / JavaScript / CSS</td>
+            <td>Performance Testing</td>
+            <td>JMeter HTML dashboard and report resources</td>
+        </tr>
+        <tr>
             <td>Git / GitHub</td>
             <td>All Projects</td>
             <td>Version control and source code management</td>
@@ -261,26 +309,32 @@
     </tbody>
 </table>
 
-<h2>5. Documentation and Execution</h2>
+<h2>5. Documentation and Deliverables</h2>
 
 <p>
-    Each project contains dedicated documentation describing its architecture,
+    Each automation project contains dedicated documentation describing its architecture,
     prerequisites, configuration, execution procedures, and test results.
+    The Exercise 2 directory contains the corresponding performance analysis report.
 </p>
 
 <table>
     <thead>
         <tr>
-            <th>Project</th>
-            <th>Technical Documentation</th>
+            <th>Project / Exercise</th>
+            <th>Technical Documentation / Report</th>
             <th>Execution Guide</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>Performance Testing</td>
+            <td>Performance Testing – Exercise 1</td>
             <td><code>performanceTesting/README.md</code></td>
             <td><code>performanceTesting/readme.txt</code></td>
+        </tr>
+        <tr>
+            <td>Performance Results Analysis – Exercise 2</td>
+            <td><code>ejercicio2/InformeResultados_Ejercicio2.txt</code></td>
+            <td>Not applicable – analysis of provided results</td>
         </tr>
         <tr>
             <td>Karate API Automation</td>
@@ -302,20 +356,21 @@
     <li>Project-specific dependencies and configurations are documented separately.</li>
     <li>Test data and execution evidence are maintained within their corresponding project directories.</li>
     <li>Performance metrics and automation results should be interpreted according to each project's documented scope.</li>
+    <li>The Exercise 2 report is based on the performance results and monitoring diagram supplied in the assessment.</li>
     <li>Refer to the individual project documentation before executing its test suites.</li>
 </ul>
 
 <h2>7. Final Notes</h2>
 
 <p>
-    This repository consolidates the solutions developed for the
+    This repository consolidates the solutions and deliverables developed for the
     <strong>Sofka Technologies Technical Assessment</strong>, demonstrating practical
     experience in Performance Engineering, API Test Automation, and UI Test Automation.
 </p>
 
 <p>
-    The projects demonstrate the application of software testing practices,
-    automation frameworks, structured test execution, and technical documentation.
+    The assessment deliverables demonstrate the application of software testing practices,
+    performance analysis, automation frameworks, structured test execution, and technical documentation.
 </p>
 
 <p>
