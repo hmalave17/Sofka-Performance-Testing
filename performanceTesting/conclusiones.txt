@@ -165,7 +165,9 @@ The following technical observations were identified during the implementation a
 
 - The HTML dashboard was generated from the existing JTL evidence without executing the performance test again.
 
-- The dashboard statistics were independently compared against the JTL analysis and showed consistent sample counts, response times, and throughput measurements.
+- The generated dashboard statistics were independently compared against the JTL analysis and showed consistent sample counts, response times, and throughput measurements.
+
+- The original JTL file remains the primary execution evidence, while the HTML dashboard provides a visual representation of the recorded performance results.
 
 ==================================================
 5. LIMITATIONS AND CONSIDERATIONS
@@ -197,7 +199,9 @@ All three official performance acceptance criteria were successfully met.
 
 The calibration process demonstrated the importance of analyzing actual execution evidence and adjusting the throughput configuration based on measured results rather than relying exclusively on configured target values.
 
-The implementation also incorporates external CSV test data, concurrent virtual users, response assertions, JTL execution evidence, and an HTML performance dashboard.
+The implementation also incorporates external CSV test data, concurrent virtual users, response assertions, JTL execution evidence, and a generated HTML performance dashboard.
+
+The dashboard was generated from the definitive JTL execution file and its statistics were compared against the original execution evidence, providing an additional verification layer without repeating the load test.
 
 The final solution provides a reproducible performance testing scenario and documented evidence of the results obtained under the assessment conditions.
 

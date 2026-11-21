@@ -1,4 +1,3 @@
-
 <h1>Performance Testing – FakeStore API | Sofka Technologies</h1>
 
 <h2>1. Project Overview</h2>
@@ -35,7 +34,7 @@
     </thead>
     <tbody>
         <tr><td>Apache JMeter</td><td>5.6.3</td><td>Performance and load testing execution.</td></tr>
-        <tr><td>Java (JDK)</td><td>Java 11 (recommended)</td><td>Runtime environment used by Apache JMeter 5.6.3.</td></tr>
+        <tr><td>Java (JDK)</td><td>Microsoft OpenJDK 11.0.18 (64-bit)</td><td>Runtime environment used by Apache JMeter 5.6.3.</td></tr>
         <tr><td>CSV</td><td>Standard CSV format</td><td>External parameterized test data.</td></tr>
         <tr><td>JSON</td><td>Standard JSON format</td><td>HTTP request payload and API response validation.</td></tr>
         <tr><td>HTTP</td><td>HTTPS</td><td>Communication protocol used to access the API.</td></tr>
@@ -127,7 +126,7 @@
         <tr><td><code>data/users.csv</code></td><td>Contains the five test user records used for authentication.</td></tr>
         <tr><td><code>test-plans/</code></td><td>Contains the definitive JMeter test plan.</td></tr>
         <tr><td><code>results/</code></td><td>Stores the JTL execution evidence.</td></tr>
-        <tr><td><code>reports/html-report/</code></td><td>Will contain the generated JMeter HTML dashboard and its resources.</td></tr>
+        <tr><td><code>reports/html-report/</code></td><td>Contains the generated JMeter HTML dashboard and its resources.</td></tr>
         <tr><td><code>README.md</code></td><td>Technical overview, architecture, configuration, and performance results.</td></tr>
         <tr><td><code>readme.txt</code></td><td>Step-by-step installation and execution instructions.</td></tr>
         <tr><td><code>conclusiones.txt</code></td><td>Performance findings, observations, and final conclusions.</td></tr>
@@ -284,7 +283,7 @@
 <h3>9.2 HTML Performance Dashboard</h3>
 
 <p>
-    Apache JMeter's HTML dashboard can be generated using the existing
+    The Apache JMeter HTML performance dashboard was generated using the existing
     JTL execution evidence, without executing the performance test again.
 </p>
 
@@ -292,8 +291,17 @@
 <pre><code>reports/html-report/index.html</code></pre>
 
 <p>
-    The generated dashboard statistics will be compared against the original JTL
-    evidence to verify consistency between the report and the recorded execution data.
+    The generated dashboard contains aggregated execution statistics, response time measurements,
+    throughput information, and performance visualizations.
+</p>
+
+<p>
+    The dashboard statistics were compared against the original JTL execution evidence
+    to verify consistency between the generated report and the recorded execution data.
+</p>
+
+<p>
+    The original JTL file remains the primary execution evidence.
 </p>
 
 <h2>10. Reproducibility and Execution</h2>
@@ -341,8 +349,8 @@
 </p>
 
 <p>
-    The project provides a reproducible test plan, external test data, and execution evidence.
-    An HTML dashboard will also be included to support the analysis and verification of the results.
+    The project provides a reproducible test plan, external test data, execution evidence,
+    and a generated HTML dashboard to support the analysis and verification of the results.
 </p>
 
 <p>

@@ -13,6 +13,8 @@ The following software is required to work with this project:
 - Git, if cloning the repository from GitHub.
 - Internet access to reach the FakeStore API.
 
+The original assessment execution used Microsoft OpenJDK 11.0.18 (64-bit).
+
 Verify the Java installation:
 
     java -version
@@ -29,13 +31,11 @@ The JMeter executable must point to the actual installation directory on your co
 
 Clone the public GitHub repository:
 
-    git clone <GITHUB_REPOSITORY_URL>
+    git clone https://github.com/hmalave17/Sofka-Performance-Testing.git
 
 Navigate to the project directory:
 
-    cd performanceTesting
-
-If the repository is already downloaded, open PowerShell in the project root directory.
+    cd Sofka-Performance-Testing
 
 The project root must contain the following directories and files:
 
@@ -46,6 +46,8 @@ The project root must contain the following directories and files:
     README.md
     readme.txt
     conclusiones.txt
+
+If the repository is already downloaded, open PowerShell in the project root directory.
 
 ============================================================
 3. VERIFY PROJECT FILES
@@ -68,8 +70,8 @@ The test plan reads the authentication data from this external CSV file.
 IMPORTANT:
 
 - Do not replace the CSV structure or column names.
-- Do not expose real credentials, passwords, or authentication tokens.
-- Only use test credentials that are authorized for publication and assessment purposes.
+- The CSV contains the five test credentials provided for the technical assessment, authorized for use and publication as part of this exercise.
+- These credentials are test data and should only be used for the intended assessment scenario.
 - The CSV is configured for shared consumption across the virtual users.
 
 ============================================================
@@ -135,7 +137,7 @@ The test validates:
 
 Apache JMeter can generate an HTML dashboard from an existing JTL file without executing the performance test again.
 
-To generate the dashboard using the original assessment evidence, configure the paths:
+To regenerate the dashboard using the original assessment evidence, configure the paths:
 
     $project = (Get-Location).Path
 
@@ -159,7 +161,9 @@ After successful generation, open:
 
     reports/html-report/index.html
 
-The dashboard includes aggregated execution statistics, response time measurements, throughput information, and performance visualizations.
+The generated dashboard includes aggregated execution statistics, response time measurements, throughput information, and performance visualizations.
+
+The existing dashboard is already included in the repository.
 
 If the output directory already exists and contains files, use a different output directory, such as:
 
