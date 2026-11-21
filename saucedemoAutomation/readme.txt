@@ -22,7 +22,7 @@ Verify the Gradle installation:
 
 Clone the repository using the following command:
 
-    git clone karateAutomationFramework
+    git clone https://github.com/hmalave17/Sofka-Performance-Testing.git
 
 Navigate to the project directory:
 
