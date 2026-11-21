@@ -1,0 +1,299 @@
+INFORME DE ANALISIS DE RESULTADOS - EJERCICIO 2
+Assessment tecnico - Prueba de carga y analisis de rendimiento
+
+======================================================================
+1. OBJETIVO Y ALCANCE
+======================================================================
+
+El objetivo de este informe es analizar los resultados de la prueba de carga
+proporcionados en el archivo textSummary.txt y el diagrama de monitoreo que
+relaciona los usuarios virtuales (VUs) con las peticiones HTTP por segundo.
+
+El analisis se basa exclusivamente en las evidencias incluidas en el
+documento del assessment. No se dispone de logs de aplicacion, metricas de
+infraestructura ni detalles de configuracion adicionales que permitan
+determinar la causa raiz de los errores observados.
+
+======================================================================
+2. RESUMEN EJECUTIVO
+======================================================================
+
+La ejecucion registro 276,650 solicitudes HTTP, con un throughput promedio
+de 73.176857 solicitudes por segundo. El numero maximo de usuarios virtuales
+(VUs) fue de 140.
+
+El resumen reporta 6,759 solicitudes fallidas, equivalentes al 2.44% del
+total, y 269,891 checks exitosos, equivalentes al 97.55%.
+
+El tiempo promedio de respuesta (http_req_duration) fue de 861.68 ms,
+mientras que el percentil 95 (P95) alcanzo 1.57 segundos. El tiempo maximo
+registrado fue de 29.93 segundos.
+
+La distribucion de errores muestra un predominio de respuestas HTTP 5xx,
+con 5,987 eventos en la categoria stage 1. Ademas, el grafico muestra una
+caida pronunciada de las peticiones por segundo durante un intervalo en el
+que los usuarios virtuales se mantienen aproximadamente en 140.
+
+En conjunto, los resultados muestran que la prueba sostuvo un volumen
+importante de carga, pero tambien evidencian errores de servidor, tiempos
+de respuesta extremos y una interrupcion temporal del throughput que
+requieren investigacion.
+
+======================================================================
+3. RESULTADOS GENERALES
+======================================================================
+
+Indicador                                      Resultado
+---------------------------------------------------------------
+Solicitudes HTTP totales                      276,650
+Throughput promedio                           73.176857 req/s
+Usuarios virtuales maximos                    140
+Checks exitosos                               269,891 (97.55%)
+Checks fallidos                               6,759
+Solicitudes fallidas                          6,759 (2.44%)
+Datos recibidos                               842 MB (223 kB/s)
+Datos enviados                                588 MB (156 kB/s)
+
+Interpretacion:
+
+- La ejecucion proceso 276,650 solicitudes, con una tasa promedio cercana
+  a 73.18 solicitudes por segundo.
+- Se alcanzo un maximo de 140 usuarios virtuales.
+- El 97.55% de los checks fue exitoso; el 2.45% restante corresponde a
+  checks fallidos, segun el resumen.
+- La metrica failed_request reporta 2.44% y 6,759 solicitudes fallidas.
+  El porcentaje de checks y el porcentaje de solicitudes fallidas son
+  indicadores relacionados, pero no deben confundirse: uno contabiliza
+  validaciones (checks) y el otro solicitudes HTTP fallidas.
+
+======================================================================
+4. ANALISIS DE TIEMPOS DE RESPUESTA
+======================================================================
+
+Metrica http_req_duration:
+
+Indicador                         Resultado
+------------------------------------------------
+Promedio                          861.68 ms
+Minimo                            191.86 ms
+Mediana                           613.42 ms
+Maximo                            29.93 s
+Percentil 90 (P90)                1.28 s
+Percentil 95 (P95)                1.57 s
+
+La mediana de 613.42 ms indica que la mitad de las solicitudes tuvo una
+duracion igual o inferior a ese valor. El promedio de 861.68 ms es mayor
+que la mediana, lo que refleja la influencia de solicitudes con tiempos
+de respuesta elevados.
+
+El P90 fue de 1.28 segundos y el P95 de 1.57 segundos. Por tanto, el 5%
+superior de las solicitudes se ubico por encima de aproximadamente
+1.57 segundos. El maximo de 29.93 segundos evidencia casos extremos que
+deben investigarse.
+
+La metrica { expected_response:true } presenta los siguientes valores:
+
+- Promedio: 735.84 ms
+- Minimo: 244.92 ms
+- Mediana: 600.7 ms
+- Maximo: 26.72 s
+- P90: 1.22 s
+- P95: 1.42 s
+
+Esta metrica corresponde al subconjunto de solicitudes clasificadas como
+respuestas esperadas por la herramienta. Sus valores son inferiores a los
+de http_req_duration, pero tambien registra un maximo elevado de 26.72 s.
+
+El resumen no especifica el umbral de aceptacion propio del Ejercicio 2.
+Como referencia, el Ejercicio 1 del mismo assessment establece un maximo
+de 1.5 segundos. Si se utilizara ese valor como referencia comparativa,
+el P95 general de 1.57 segundos lo superaria, al igual que el tiempo
+maximo de 29.93 segundos. Esto no debe presentarse como un criterio
+oficial del Ejercicio 2, ya que sus instrucciones no lo reiteran.
+
+======================================================================
+5. ANALISIS DE ERRORES
+======================================================================
+
+La metrica failed_request reporta 6,759 solicitudes fallidas, equivalentes
+al 2.44% del total de 276,650 solicitudes.
+
+Distribucion reportada:
+
+Categoria de error                  Cantidad       Tasa reportada
+-----------------------------------------------------------------
+stage_0_HTTP5xx                     1              0.000265/s
+stage_1_HTTP4xx                     769            0.203409/s
+stage_1_HTTP5xx                     5,987          1.583625/s
+stage_2_HTTP5xx                     2              0.000529/s
+-----------------------------------------------------------------
+Total                               6,759
+
+Los errores HTTP 5xx suman 5,990 eventos (1 + 5,987 + 2), por lo que
+constituyen la gran mayoria de los errores clasificados. Los errores
+HTTP 4xx suman 769 eventos.
+
+Interpretacion:
+
+- Los codigos HTTP 5xx suelen representar respuestas de error del servidor
+  o de componentes que procesan la solicitud. La concentracion de 5xx en
+  stage 1 es el hallazgo mas relevante de esta distribucion.
+- Los codigos HTTP 4xx indican solicitudes que fueron rechazadas o no
+  pudieron procesarse por condiciones asociadas a la solicitud. Se debe
+  revisar el codigo especifico y el contexto de cada respuesta para
+  identificar el motivo.
+- Los datos disponibles permiten identificar la categoria y cantidad de
+  errores, pero no permiten establecer su causa raiz.
+- Se recomienda correlacionar los errores con marcas de tiempo, endpoints,
+  logs de aplicacion y metricas de infraestructura.
+
+======================================================================
+6. ANALISIS DEL DIAGRAMA DE MONITOREO: VUs VS. PETICIONES POR SEGUNDO
+======================================================================
+
+El diagrama de la pagina 3 muestra dos series:
+
+- VUs: cantidad de usuarios virtuales, representada por la linea verde.
+- http_reqs: peticiones HTTP por segundo, representada por la linea azul.
+
+Observaciones principales:
+
+1. La cantidad de usuarios virtuales aumenta al inicio y alcanza un nivel
+   cercano a 140. Durante la mayor parte del periodo mostrado se mantiene
+   aproximadamente en ese nivel.
+
+2. Mientras se mantienen alrededor de 140 VUs, las peticiones HTTP por
+   segundo fluctuan generalmente en un rango aproximado de 70 a 85 req/s.
+
+3. Entre aproximadamente las 01:51 y las 01:59 se observa una caida
+   pronunciada de las peticiones por segundo. En el punto mas bajo, la
+   serie azul se aproxima a valores inferiores a 25 req/s.
+
+4. Durante esa caida, la linea de VUs permanece cercana a 140. Esto indica
+   que la reduccion del throughput no coincide con una reduccion
+   equivalente de los usuarios virtuales concurrentes.
+
+5. Posteriormente, las peticiones por segundo se recuperan y vuelven a
+   fluctuar alrededor de los niveles observados antes de la caida.
+
+6. El marcador del grafico correspondiente al 24-04-2025 a las 02:02:00
+   muestra 140 VUs y 82.6 peticiones por segundo.
+
+Interpretacion:
+
+La caida temporal del throughput mientras se mantienen aproximadamente
+140 usuarios virtuales es un comportamiento relevante. Puede ser
+compatible con un aumento de latencia, errores, espera de dependencias,
+saturacion de recursos o una interrupcion temporal del servicio. Sin
+embargo, el grafico no permite determinar cual de estas posibilidades
+ocurrio.
+
+La recuperacion posterior muestra que el throughput volvio a niveles
+similares a los anteriores, pero no elimina la necesidad de investigar
+el intervalo de degradacion.
+
+======================================================================
+7. HALLAZGOS
+======================================================================
+
+1. Volumen de carga: se registraron 276,650 solicitudes HTTP y un
+   throughput promedio de 73.176857 req/s, con un maximo de 140 VUs.
+
+2. Solicitudes fallidas: se reportaron 6,759 solicitudes fallidas,
+   equivalentes al 2.44% del total.
+
+3. Predominio de errores HTTP 5xx: se identificaron 5,990 eventos
+   HTTP 5xx, frente a 769 eventos HTTP 4xx.
+
+4. Latencia elevada en la cola de distribucion: el P95 fue de 1.57 s
+   y el maximo alcanzo 29.93 s.
+
+5. Diferencia entre promedio y mediana: el promedio de 861.68 ms supera
+   la mediana de 613.42 ms, lo que evidencia la influencia de solicitudes
+   considerablemente mas lentas.
+
+6. Caida temporal del throughput: el grafico muestra una reduccion
+   pronunciada de las peticiones por segundo mientras los VUs permanecen
+   aproximadamente en 140.
+
+7. Recuperacion: despues del intervalo de caida, el throughput vuelve a
+   niveles cercanos a los observados antes del evento.
+
+======================================================================
+8. CONCLUSIONES
+======================================================================
+
+La ejecucion demostro que el sistema pudo procesar un volumen considerable
+de solicitudes bajo una carga que alcanzo 140 usuarios virtuales y un
+throughput promedio de aproximadamente 73.18 solicitudes por segundo.
+
+No obstante, los resultados tambien muestran aspectos que afectan la
+estabilidad y la experiencia de respuesta: 2.44% de solicitudes fallidas,
+predominio de errores HTTP 5xx, un P95 de 1.57 segundos y un tiempo maximo
+de 29.93 segundos.
+
+El diagrama de monitoreo aporta un hallazgo adicional: durante un intervalo
+se redujo considerablemente el numero de peticiones por segundo, aunque
+los usuarios virtuales permanecieron aproximadamente en 140. Este
+comportamiento debe analizarse junto con los errores y los tiempos de
+respuesta registrados.
+
+Por lo tanto, los resultados no permiten concluir que el sistema mantuvo
+un rendimiento estable durante toda la prueba. Se requiere investigar
+los errores de servidor, los tiempos extremos y la caida temporal del
+throughput antes de considerar satisfactorio el comportamiento bajo carga.
+
+======================================================================
+9. RECOMENDACIONES
+======================================================================
+
+1. Investigar los errores HTTP 5xx, especialmente los 5,987 eventos
+   clasificados como stage 1. Revisar logs de aplicacion y servidor,
+   trazas y respuestas asociadas a las marcas de tiempo de los errores.
+
+2. Analizar los 769 errores HTTP 4xx para identificar los codigos
+   especificos y determinar si corresponden a datos de entrada,
+   autenticacion, autorizacion, validaciones o reglas de negocio.
+
+3. Correlacionar el intervalo de caida del throughput observado en el
+   grafico con los registros de errores y los tiempos de respuesta.
+
+4. Durante una nueva ejecucion, monitorear CPU, memoria, uso de red,
+   conexiones, pools de hilos, base de datos y dependencias externas,
+   siempre que esas metricas esten disponibles.
+
+5. Analizar los percentiles P90, P95 y P99, ademas del promedio, para
+   detectar degradaciones que afectan a una parte de las solicitudes.
+
+6. Repetir la prueba en condiciones controladas y conservar la misma
+   configuracion de carga para comprobar si la caida del throughput y
+   los errores son reproducibles.
+
+7. Ejecutar pruebas incrementales de carga para identificar si existe
+   un nivel de concurrencia a partir del cual aumentan los errores o
+   los tiempos de respuesta.
+
+8. Definir y documentar umbrales de aceptacion especificos para esta
+   prueba, incluyendo throughput, latencia por percentil y porcentaje
+   de errores.
+
+======================================================================
+10. LIMITACIONES DEL ANALISIS
+======================================================================
+
+- El analisis se basa en el resumen textSummary.txt y en el diagrama
+  proporcionado por el assessment.
+- No se proporciono el archivo fuente completo de resultados por
+  solicitud, logs de aplicacion ni metricas de infraestructura.
+- No se conocen todos los parametros de configuracion de la prueba,
+  como la duracion planificada, el patron de llegada de usuarios o
+  los umbrales configurados.
+- No es posible atribuir una causa raiz a los errores ni a la caida
+  del throughput con la evidencia disponible.
+- Los criterios de 1.5 segundos y menos del 3% aparecen en el Ejercicio 1.
+  Se mencionan aqui solo como referencia comparativa y no como criterios
+  oficiales expresamente definidos para el Ejercicio 2.
+
+======================================================================
+FIN DEL INFORME
+======================================================================
