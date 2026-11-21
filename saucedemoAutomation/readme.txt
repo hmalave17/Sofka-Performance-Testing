@@ -22,11 +22,11 @@ Verify the Gradle installation:
 
 Clone the repository using the following command:
 
-    git clone <repository-url>
+    git clone karateAutomationFramework
 
 Navigate to the project directory:
 
-    cd <project-folder>
+    cd saucedemoAutomation
 
 3. CONFIGURATION
 

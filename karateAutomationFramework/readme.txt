@@ -25,7 +25,7 @@ Verify the Maven installation:
 
 Clone the repository:
 
-    git clone <repository-url>
+    git clone https://github.com/hmalave17/Sofka-Performance-Testing.git
 
 Navigate to the project directory:
 
